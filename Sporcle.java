@@ -89,6 +89,20 @@ class Sporcle {
 			// System.out.println(String.format("%s, do you want to play again?", playerName));
 	}
 	
+	/**
+	  * @author
+	  * @version
+	  * @param
+	  * @return		void
+	  * @throws/@exception (since javadoc 1.2)
+	  */
+	public void startGame() {
+		
+		System.out.println("Start game!");
+		
+		return;
+	}
+	
 	static String prompt(String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
