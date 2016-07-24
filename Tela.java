@@ -12,9 +12,16 @@ class Tela {
 		
 		Sporcle jogoSporcle = new Sporcle();
 		
+		
+		jogoSporcle.setPlayerName(screenPrompts("Player name: "));
+		// String name = getPlayerName();
+		System.out.println(jogoSporcle.getPlayerName());
+		
 	}
-	
-	public String getPlayerName(){
-		return prompt("Player name: ");
+		
+	static String screenPrompts(String msg) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print(msg);
+		return sc.nextLine();
 	}
 }
