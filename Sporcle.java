@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.lang.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 /**
 	This class was a challenge requested on ACADEMIA DO JAVA, ajtf96.
 	The main objective was to use arrays and Java's control flow statements.
@@ -7,6 +10,9 @@ import java.lang.*;
 	@date: 2016-06-23
 */
 class Sporcle {
+	
+	@Getter @Setter(AccessLevel.PROTECTED) private String playerName;
+	
 	public static void main(String[] args) {
 		
 		boolean wordFound = false;
@@ -17,7 +23,7 @@ class Sporcle {
 		long clockStart = 0L;
 		long clockNow = 0L;
 		long timeLimit = 300000L;
-		String playerName = "";
+		// String playerName = "";
 		String tryN = "";
 		String[] triesArray = new String[50];
 		String[] keywordArray = {
@@ -34,7 +40,7 @@ class Sporcle {
 		
 		System.out.println("Welcome to sporcle game!");
 		System.out.println("In this game you try to get right as many words as you can.");
-		playerName = getPlayerName();
+		// playerName = getPlayerName();
 		
 		System.out.println("Level 1");
 		System.out.println("Time left: 5 minutes");
@@ -76,13 +82,11 @@ class Sporcle {
 			i++;
 		}
 		if(hits == nWords)
-			System.out.println(String.format("%s YOU WIN! You got all the %s words in less than 5 minutes", playerName, nWords));
+			System.out.println("YOU WIN!");
+			// System.out.println(String.format("%s YOU WIN! You got all the %s words in less than 5 minutes", playerName, nWords));
 		else
-			System.out.println(String.format("%s, do you want to play again?", playerName));
-	}
-	
-	static String getPlayerName(){
-		return prompt("Player name: ");
+			System.out.println("YOU LOST");
+			// System.out.println(String.format("%s, do you want to play again?", playerName));
 	}
 	
 	static String prompt(String msg) {
