@@ -33,4 +33,9 @@ class Tela {
 		System.out.print(msg);
 		return sc.nextLine();
 	}
+	
+	public void showMessage(String msg){
+		System.out.println(msg);
+		return;
+	}
 }
