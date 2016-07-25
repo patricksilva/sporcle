@@ -12,6 +12,7 @@ import lombok.Setter;
 class Sporcle {
 	
 	@Getter @Setter(AccessLevel.PROTECTED) private String playerName;
+	Tela tela = new Tela();
 	
 	public static void main(String[] args) {
 		
@@ -38,12 +39,12 @@ class Sporcle {
 			"while"
 		};
 		
-		System.out.println("Welcome to sporcle game!");
-		System.out.println("In this game you try to get right as many words as you can.");
+		// System.out.println("Welcome to sporcle game!");
+		// System.out.println("In this game you try to get right as many words as you can.");
 		// playerName = getPlayerName();
 		
-		System.out.println("Level 1");
-		System.out.println("Time left: 5 minutes");
+		// System.out.println("Level 1");
+		// System.out.println("Time left: 5 minutes");
 
 		nWords = keywordArray.length;
 		System.out.println("Total words to get right: " + nWords);
@@ -101,6 +102,11 @@ class Sporcle {
 		
 		System.out.println("Start game!");
 		
+		this.tela.showMessage(this.makeWelcome());
+		this.tela.showMessage(this.showGameDescription());
+		this.setPlayerName(this.tela.screenPrompts("PlayerName = "));
+		this.tela.showMessage(this.showLevel01Description() + this.playerName + ", good luck!");
+		
 		return;
 	}
 	
@@ -126,4 +132,15 @@ class Sporcle {
 		return L;
 	}
 	
+	private String makeWelcome(){
+		return "Welcome to sporcle game!";
+	}
+	
+	private String showGameDescription(){
+		return "In this game you try to get right as many words as you can.";
+	}
+	
+	private String showLevel01Description(){
+		return "Level 1\nTime left: 5 minutes\n";
+	}
 }
