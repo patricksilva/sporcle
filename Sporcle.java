@@ -104,7 +104,7 @@ class Sporcle {
 		
 		this.tela.showMessage(this.makeWelcome());
 		this.tela.showMessage(this.showGameDescription());
-		this.setPlayerName(this.tela.screenPrompts("PlayerName = "));
+		this.setPlayerName(this.tela.screenPrompts("PlayerName: "));
 		this.tela.showMessage(this.showLevel01Description() + this.playerName + ", good luck!");
 		
 		return;
