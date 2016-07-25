@@ -14,10 +14,6 @@ class Tela {
 		
 		jogoSporcle.startGame();
 		
-		jogoSporcle.setPlayerName(screenPrompts("Player name: "));
-		// String name = getPlayerName();
-		System.out.println(jogoSporcle.getPlayerName());
-		
 	}
 	
 	/**
@@ -28,7 +24,7 @@ class Tela {
 	  * @throws/@exception (since javadoc 1.2)
 	  * @since		0.1
 	  */
-	static String screenPrompts(String msg) {
+	public String screenPrompts(String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
 		return sc.nextLine();
