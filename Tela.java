@@ -19,7 +19,15 @@ class Tela {
 		System.out.println(jogoSporcle.getPlayerName());
 		
 	}
-		
+	
+	/**
+	  * @author		Patrick Alex - patrickalex@gmail.com
+	  * @version	0.1, 07/24/2016
+	  * @param		msg		A string containing the message to be printed on the default output right before calling keyboard reading.
+	  * @return		void
+	  * @throws/@exception (since javadoc 1.2)
+	  * @since		0.1
+	  */
 	static String screenPrompts(String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
