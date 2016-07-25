@@ -100,8 +100,6 @@ class Sporcle {
 	  */
 	public void startGame() {
 		
-		System.out.println("Start game!");
-		
 		this.tela.showMessage(this.makeWelcome());
 		this.tela.showMessage(this.showGameDescription());
 		this.setPlayerName(this.tela.screenPrompts("PlayerName: "));
