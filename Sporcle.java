@@ -103,6 +103,14 @@ class Sporcle {
 		return;
 	}
 	
+	/**
+	  * @author		Patrick Alex - patrickalex@gmail.com
+	  * @version	0.1, 06/27/2016
+	  * @param		msg		A string containing the message to be printed on the default output right before calling keyboard reading.
+	  * @return		void
+	  * @throws/@exception (since javadoc 1.2)
+	  * @since		0.1
+	  */
 	static String prompt(String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
