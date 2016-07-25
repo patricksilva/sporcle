@@ -90,11 +90,12 @@ class Sporcle {
 	}
 	
 	/**
-	  * @author
-	  * @version
+	  * @author		Patrick Alex - patrickalex@gmail.com
+	  * @version	0.1, 07/24/2016
 	  * @param
 	  * @return		void
 	  * @throws/@exception (since javadoc 1.2)
+	  * @since		0.1
 	  */
 	public void startGame() {
 		
