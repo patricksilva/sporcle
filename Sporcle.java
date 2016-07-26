@@ -25,82 +25,10 @@ class Sporcle {
 			"this","throw","throws","transient","try","void","volatile",
 			"while"
 	};
-	
-	public static void main(String[] args) {
-		
-		boolean wordFound = false;
-		int maxLength = 0;
-		int nWords = 0;
-		int hits = 0;
-		int mistakes = 0;
-		long clockStart = 0L;
-		long clockNow = 0L;
-		long timeLimit = 300000L;
-		// String playerName = "";
-		String tryN = "";
-		String[] triesArray = new String[50];
-		String[] keywordArray = {
-			"abstract","assert","boolean","break","byte","case",
-			"catch","char","class","const","continue","default",
-			"do","double","else","enum","extends","final","finally",
-			"float","for","goto","if","implements","import",
-			"instanceof","int","interface","long","native","new",
-			"package","private","protected","public","return",
-			"short","static","strictfp","super","switch","synchronized",
-			"this","throw","throws","transient","try","void","volatile",
-			"while"
-		};
-		
-		// System.out.println("Welcome to sporcle game!");
-		// System.out.println("In this game you try to get right as many words as you can.");
-		// playerName = getPlayerName();
-		
-		// System.out.println("Level 1");
-		// System.out.println("Time left: 5 minutes");
-
-		nWords = keywordArray.length;
-		// System.out.println("Total words to get right: " + nWords);
-		
-		// Begin clock
-		clockStart = System.currentTimeMillis();
-		
-		int i = 0;
-		while( (clockNow - clockStart ) <= timeLimit ){
-			clockNow = System.currentTimeMillis();
-			tryN = prompt("Try " +  (i+1)  + ": ");
-			// Checks if the time is up
-			if ((clockNow - clockStart ) > timeLimit )
-				break;
-			// Checks tries
-			for(int j = 0; j < nWords; j++) {
-				if (tryN != null & tryN.equals(keywordArray[j]) & !tryN.equals(triesArray[j])){
-					triesArray[j] = tryN;
-					hits++;
-					wordFound = true;
-				}
-				
-				// Prints words tried in 10 x 5 (columns x lines)
-				System.out.print( 
-					( (triesArray[j] == null)?("----"):(triesArray[j]) ) + "\t" 
-				);
-				if( (j+1) % 10 == 0 )
-					System.out.println();
-			}
-			if( wordFound ){
-				wordFound = false;
-			} else {
-				mistakes += 1;
-			}
-			System.out.println(String.format("\tHits: %s\tMistakes: %s\tEleapsed time: %s", hits, mistakes, ((clockNow - clockStart) * .001)));
-			i++;
-		}
-		if(hits == nWords)
-			System.out.println("YOU WIN!");
-			// System.out.println(String.format("%s YOU WIN! You got all the %s words in less than 5 minutes", playerName, nWords));
-		else
-			System.out.println("YOU LOST");
-			// System.out.println(String.format("%s, do you want to play again?", playerName));
-	}
+	String[] triesArray = new String[keywordArray.length];
+	@Getter private int mistakes = 0;
+	@Getter private int hits = 0;
+	Cronometro cronometro = new Cronometro();
 	
 	/**
 	  * @author		Patrick Alex - patrickalex@gmail.com
@@ -119,29 +47,17 @@ class Sporcle {
 		this.tela.showMessage(this.showTotalWords());
 		this.tela.showMessage(this.playerName + ", good luck!");
 		
-		return;
-	}
-	
-	/**
-	  * @author		Patrick Alex - patrickalex@gmail.com
-	  * @version	0.1, 06/27/2016
-	  * @param		msg		A string containing the message to be printed on the default output right before calling keyboard reading.
-	  * @return		void
-	  * @throws/@exception (since javadoc 1.2)
-	  * @since		0.1
-	  */
-	static String prompt(String msg) {
-		Scanner sc = new Scanner(System.in);
-		System.out.print(msg);
-		return sc.nextLine();
-	}
-	
-	static int getMaxLength(String[] array){
-		int L = 0;
-		for(String item : array){
-			L = (item.length() > L) ? item.length() : L;
+		this.cronometro.startChronometer();
+		int i = 0;
+		while( this.playCondition() ){
+			this.evalTry(this.readTry(i));
+			this.cronometro.checkPoint();
+			this.giveFeedback();
+			i++;
 		}
-		return L;
+		
+		this.endGame();
+		return;
 	}
 	
 	private String makeWelcome(){
@@ -153,10 +69,73 @@ class Sporcle {
 	}
 	
 	private String showLevel01Description(){
-		return "Level 1\nTime left: 5 minutes";
+		return "Level 1\nTime left: " + this.cronometro.minutesLeft() + " minutes";
 	}
 	
 	private String showTotalWords(){
 		return "Total words to get right: " + this.keywordArray.length;
+	}
+	
+	private String readTry(final int i){
+		return this.tela.screenPrompts("Try " + (i+1) + ": ");
+	}
+	
+	private void evalTry(final String nTry){
+		boolean wordFound = false;
+		for(int j = 0; j < this.keywordArray.length; j++) {
+			if (nTry != null & nTry.equals(this.keywordArray[j]) & !nTry.equals(this.triesArray[j])){
+				this.triesArray[j] = nTry;
+				this.addaHit();
+				wordFound = true;
+			}
+		}
+		if( wordFound ){
+			wordFound = false;
+		} else {
+			this.addaMistake();
+		}
+		return;
+	}
+	
+	private void giveFeedback(){
+		this.tela.showMessage(this.toString());
+		this.tela.showMessage("Hits: " + this.getHits());
+		this.tela.showMessage("Mistakes: " + this.getMistakes());
+		this.tela.showMessage("Eleapsed time: " + this.cronometro.getEleapsedTime());
+		return;
+	}
+	
+	/*
+	 * Prints words tried in 10 x 5 (columns x lines)
+	 */
+	public String toString(){
+		String result = "";
+		for(int j = 0; j < this.keywordArray.length; j++){ 
+			result += ( (triesArray[j] == null)?("----"):(triesArray[j]) ) + "\t";
+			if( (j+1) % 10 == 0 )
+				result += "\n";
+		}
+		return result;
+	}
+	
+	private void addaMistake(){
+		this.mistakes++;
+	}
+	
+	private void addaHit(){
+		this.hits++;
+	}
+	
+	private boolean playCondition(){
+		return this.hits < this.keywordArray.length & !this.cronometro.ringingAlarm();
+	}
+	private void endGame(){
+		if(this.hits == this.keywordArray.length)
+			this.tela.showMessage(this.playerName + " YOU WIN! You got all the " + 
+								this.keywordArray.length + " words in less than " +
+								this.cronometro.minutesLeft() + " minutes.");
+		else
+			this.tela.showMessage("YOU LOST");
+		this.tela.showMessage("Play again?");
 	}
 }
