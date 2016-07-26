@@ -24,13 +24,13 @@ class Tela {
 	  * @throws/@exception (since javadoc 1.2)
 	  * @since		0.1
 	  */
-	public String screenPrompts(String msg) {
+	public String screenPrompts(final String msg) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print(msg);
 		return sc.nextLine();
 	}
 	
-	public void showMessage(String msg){
+	public void showMessage(final String msg){
 		System.out.println(msg);
 		return;
 	}
