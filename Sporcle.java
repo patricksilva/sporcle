@@ -1,5 +1,3 @@
-import java.util.Scanner;
-import java.lang.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
