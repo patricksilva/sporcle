@@ -14,6 +14,18 @@ class Sporcle {
 	@Getter @Setter(AccessLevel.PROTECTED) private String playerName;
 	Tela tela = new Tela();
 	
+	@Getter private String[] keywordArray = {
+			"abstract","assert","boolean","break","byte","case",
+			"catch","char","class","const","continue","default",
+			"do","double","else","enum","extends","final","finally",
+			"float","for","goto","if","implements","import",
+			"instanceof","int","interface","long","native","new",
+			"package","private","protected","public","return",
+			"short","static","strictfp","super","switch","synchronized",
+			"this","throw","throws","transient","try","void","volatile",
+			"while"
+	};
+	
 	public static void main(String[] args) {
 		
 		boolean wordFound = false;
@@ -47,7 +59,7 @@ class Sporcle {
 		// System.out.println("Time left: 5 minutes");
 
 		nWords = keywordArray.length;
-		System.out.println("Total words to get right: " + nWords);
+		// System.out.println("Total words to get right: " + nWords);
 		
 		// Begin clock
 		clockStart = System.currentTimeMillis();
@@ -105,7 +117,9 @@ class Sporcle {
 		this.tela.showMessage(this.makeWelcome());
 		this.tela.showMessage(this.showGameDescription());
 		this.setPlayerName(this.tela.screenPrompts("PlayerName = "));
-		this.tela.showMessage(this.showLevel01Description() + this.playerName + ", good luck!");
+		this.tela.showMessage(this.showLevel01Description());
+		this.tela.showMessage(this.showTotalWords());
+		this.tela.showMessage(this.playerName + ", good luck!");
 		
 		return;
 	}
@@ -141,6 +155,10 @@ class Sporcle {
 	}
 	
 	private String showLevel01Description(){
-		return "Level 1\nTime left: 5 minutes\n";
+		return "Level 1\nTime left: 5 minutes";
+	}
+	
+	private String showTotalWords(){
+		return "Total words to get right: " + this.keywordArray.length;
 	}
 }
