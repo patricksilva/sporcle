@@ -14,10 +14,6 @@ class Tela {
 		
 		jogoSporcle.startGame();
 		
-		jogoSporcle.setPlayerName(screenPrompts("Player name: "));
-		// String name = getPlayerName();
-		System.out.println(jogoSporcle.getPlayerName());
-		
 	}
 	
 	/**
